@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+.main {
+  margin-top: 50px;
+  padding: 50px;
+  background-color: rgba(220, 220, 220, 0.35);
+  border-radius: 10px;
+}
+
+body {
+  background: url("/assets/img/bg2.jpg");
+}
+
+h5 {
+  margin: 0;
+  padding: 0;
+  color: #444444;
+}
+
+.provider-list-item {
+  cursor: pointer;
+  border-left: 5px solid white;
+}
+
+.provider-list-item:hover {
+  border-left: 5px solid rgba(255,38,213,0.6);
+}

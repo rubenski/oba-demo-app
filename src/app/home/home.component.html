@@ -1,0 +1,36 @@
+<h3 class="pl-1 pb-3">Oscar demo</h3>
+<div class="container">
+  <div class="row">
+    <div class="col-5 m-0 p-1">
+      <ul class="list-group w-100" *ngIf="providers">
+        <li *ngFor="let provider of providers" class="list-group-item provider-list-item"
+            (click)="selectProvider(provider)">
+          <div class="float-left mr-3">
+            <img src="{{'https://api.oba.com:8443' + provider.logos.logo60}}">
+          </div>
+          <div class="w-100 pt-2">
+            <h5>{{provider.displayName}}</h5>
+          </div>
+          <div>
+      <span class="small" *ngFor="let product of provider.products; let last = last">
+        {{product == 'current_account' ? 'current accounts' : ''}}{{product == 'credit_card' ? 'credit cards' : ''}}{{last ? '' : ','}}
+      </span>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="col-7 m-0 p-1" *ngIf="selectedProvider">
+      <ul class="list-group w-100">
+        <li class="list-group-item provider-list-item">
+          Connect your bank account(s)
+        </li>
+        <li class="list-group-item provider-list-item">
+          Make a payment
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+
