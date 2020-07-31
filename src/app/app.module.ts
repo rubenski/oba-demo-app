@@ -9,6 +9,7 @@ import {HomeComponent} from './home/home.component';
 import {HeaderComponent} from './header.component';
 import {UserService} from './user/user.service';
 import {ProviderService} from './provider/provider.service';
+import {ConsentSessionService} from './consentsession/consent.session.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import {ProviderService} from './provider/provider.service';
     FormsModule,
     HttpClientModule
   ],
-  providers: [UserService, ProviderService],
+  providers: [UserService, ProviderService, ConsentSessionService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
