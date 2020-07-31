@@ -4,7 +4,15 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve --port 4201 --host demo.oba.com` for local development. Make sure you mapped 
+`
+
+## Running on a public Ngrok domain
+
+- Create an ngrok tunnel that tunnels to localhost port 4200 : `ngrok http 4201`
+- Update nginx config in `oba-portal` with the ngrok hostname and restart nginx : `sudo systemctl restart nginx`
+- Change the application domain in oba-demo: `obademo.application.domain=<ngrok domain>`
+- Run oba-demo-app with `ng serve --port 4201 --disable-host-check`
 
 ## Code scaffolding
 
