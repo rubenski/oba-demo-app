@@ -10,12 +10,16 @@ import {HeaderComponent} from './header.component';
 import {UserService} from './user/user.service';
 import {ProviderService} from './provider/provider.service';
 import {ConsentSessionService} from './consentsession/consent.session.service';
+import {UserReturnComponent} from './user-return/user.return.component';
+import {LocalStorageKeyValueService} from './local.storage.key.value.service';
+import {ConnectionService} from './connection/connection.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    HeaderComponent
+    HeaderComponent,
+    UserReturnComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +27,7 @@ import {ConsentSessionService} from './consentsession/consent.session.service';
     FormsModule,
     HttpClientModule
   ],
-  providers: [UserService, ProviderService, ConsentSessionService],
+  providers: [UserService, ProviderService, ConsentSessionService, LocalStorageKeyValueService, ConnectionService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

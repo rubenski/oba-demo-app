@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {AppSettings} from '../app.settings';
 import {ConsentSession} from './consent.session';
 import {CreateConsentSessionRequest} from './create.consent.session.request';
+import {UserReturnedUrl} from '../user-return/user.returned.url';
 
 @Injectable()
 export class ConsentSessionService {
@@ -12,6 +13,11 @@ export class ConsentSessionService {
   }
 
   createConsentSession(request: CreateConsentSessionRequest): Observable<ConsentSession> {
-    return this.http.post<ConsentSession>(AppSettings.DEMO_BACKEND_HOSTNAME + '/oauth-consent-sessions', request, AppSettings.HTTP_OPTIONS);
+    return this.http.post<ConsentSession>(AppSettings.BACKEND_HOSTNAME_API + '/oauth-consent-sessions', request, AppSettings.HTTP_OPTIONS);
+  }
+
+  updateConsentSessionWithReturnedUser(userReturnedUrl: UserReturnedUrl, stateId: string): Observable<ConsentSession> {
+    return this.http.patch<ConsentSession>(AppSettings.BACKEND_HOSTNAME_API + '/oauth-consent-sessions/' + stateId,
+      userReturnedUrl, AppSettings.HTTP_OPTIONS);
   }
 }

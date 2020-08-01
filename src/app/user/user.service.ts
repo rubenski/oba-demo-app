@@ -12,11 +12,11 @@ export class UserService {
   }
 
   findUser(): Observable<User> {
-    return this.http.get<User>(AppSettings.DEMO_BACKEND_HOSTNAME + '/users', AppSettings.HTTP_OPTIONS);
+    return this.http.get<User>(AppSettings.BACKEND_HOSTNAME_API + '/users', AppSettings.HTTP_OPTIONS);
   }
 
   createUser(): Observable<User> {
     console.log('BLABLABLA');
-    return this.http.post<User>(AppSettings.DEMO_BACKEND_HOSTNAME + '/users', AppSettings.HTTP_OPTIONS);
+    return this.http.post<User>(AppSettings.BACKEND_HOSTNAME_API + '/users', AppSettings.HTTP_OPTIONS);
   }
 }

@@ -11,6 +11,10 @@ export class ProviderService {
   }
 
   findProviders(): Observable<CountryDataProvider[]> {
-    return this.http.get<any>(AppSettings.DEMO_BACKEND_HOSTNAME + '/providers', AppSettings.HTTP_OPTIONS);
+    return this.http.get<CountryDataProvider[]>(AppSettings.BACKEND_HOSTNAME_API + '/providers', AppSettings.HTTP_OPTIONS);
+  }
+
+  findProvider(systemName: string): Observable<CountryDataProvider> {
+    return this.http.get<CountryDataProvider>(AppSettings.BACKEND_HOSTNAME_API + '/providers/' + systemName, AppSettings.HTTP_OPTIONS);
   }
 }

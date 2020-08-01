@@ -12,7 +12,7 @@ export class UserService {
   }
 
   findUser(message: Message): Observable<any> {
-    return this.http.post<any>(AppSettings.DEMO_BACKEND_HOSTNAME + '/log', message, AppSettings.HTTP_OPTIONS);
+    return this.http.post<any>(AppSettings.BACKEND_HOSTNAME_API + '/log', message, AppSettings.HTTP_OPTIONS);
   }
 
 }

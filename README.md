@@ -9,10 +9,11 @@ Run `ng serve --port 4201 --host demo.oba.com` for local development. Make sure 
 
 ## Running on a public Ngrok domain
 
-- Create an ngrok tunnel that tunnels to localhost port 4200 : `ngrok http 4201`
+- Create an ngrok tunnel that tunnels to localhost port 4200 : `ngrok http 443`
 - Update nginx config in `oba-portal` with the ngrok hostname and restart nginx : `sudo systemctl restart nginx`
-- Change the application domain in oba-demo: `obademo.application.domain=<ngrok domain>`
-- Run oba-demo-app with `ng serve --port 4201 --disable-host-check`
+- Change the application domain in oba-demo: `obademo.application.domain=<ngrok domain>`. This sets the cookie for the domain correctly
+- Change URL in AppSettings in oba-demo-app
+- Run oba-demo-app with ` ng serve --port 4201 --disable-host-check`
 
 ## Code scaffolding
 

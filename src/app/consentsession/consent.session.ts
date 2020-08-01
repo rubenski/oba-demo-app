@@ -1,8 +1,12 @@
+import {SessionStatus} from './session.status';
+
 export class ConsentSession {
   stateId: string;
   userId: string;
-  countryDataProvider: string;
-  pendingRedirect: string;
+  countryDataProviderSystemName: string;
   returnUrl: string;
   created: string;
+  userReturnedUrl: string;
+  status: SessionStatus;
 }
+
