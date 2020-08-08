@@ -2,9 +2,9 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
 
-## Development server
+## Local development server
 
-Run `ng serve --port 4201 --host demo.oba.com` for local development. Make sure you mapped 
+Run `ng serve --port 4201 --host demo.oba.com` for local development.
 `
 
 ## Running on a public Ngrok domain

@@ -5,8 +5,10 @@ import {ProviderService} from '../provider/provider.service';
 import {UserReturnedUrl} from './user.returned.url';
 import {LocalStorageKeyValueService} from '../local.storage.key.value.service';
 import {ConnectionService} from '../connection/connection.service';
-import {CreateConnectionRequest} from '../connection/create.connection.request';
+import {RefreshTaskService} from '../refreshtask/refresh.task.service';
+import {CreateRefreshTaskRequest} from '../refreshtask/create.refresh.task.request';
 import {Connection} from '../connection/connection';
+import {IpService} from '../ip/ip.service';
 
 /**
  * Users returning from the bank will land on this component
@@ -18,11 +20,13 @@ export class UserReturnComponent implements OnInit {
 
   private stateId;
   public cdpName: string;
-  public connected: boolean;
+  public connection: Connection;
 
   constructor(private consentSessionService: ConsentSessionService,
               private connectionService: ConnectionService,
               private providerService: ProviderService,
+              private refreshTaskService: RefreshTaskService,
+              private ipService: IpService,
               private route: ActivatedRoute,
               private router: Router,
               private localStorageKeyValueService: LocalStorageKeyValueService) {
@@ -41,8 +45,14 @@ export class UserReturnComponent implements OnInit {
           // Create a connection based on this consent session, identified by its stateId
           this.connectionService.createConnection(this.stateId).subscribe(connection => {
             // Inform the user
-            this.connected = true;
-
+            this.connection = connection;
+            this.ipService.getUserIp().subscribe(ip => {
+              this.refreshTaskService.createRefreshTask(new CreateRefreshTaskRequest(connection.userId, [connection.id], ip.ip))
+                .subscribe(task => {
+                    console.log(task);
+                  }
+                );
+            });
           });
         }
       });

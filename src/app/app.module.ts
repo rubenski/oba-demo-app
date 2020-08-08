@@ -13,6 +13,9 @@ import {ConsentSessionService} from './consentsession/consent.session.service';
 import {UserReturnComponent} from './user-return/user.return.component';
 import {LocalStorageKeyValueService} from './local.storage.key.value.service';
 import {ConnectionService} from './connection/connection.service';
+import {RefreshTaskService} from './refreshtask/refresh.task.service';
+import {IpService} from './ip/ip.service';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +30,8 @@ import {ConnectionService} from './connection/connection.service';
     FormsModule,
     HttpClientModule
   ],
-  providers: [UserService, ProviderService, ConsentSessionService, LocalStorageKeyValueService, ConnectionService],
+  providers: [UserService, ProviderService, ConsentSessionService, LocalStorageKeyValueService, ConnectionService,
+    RefreshTaskService, IpService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
