@@ -8,5 +8,6 @@ export class ConsentSession {
   created: string;
   userReturnedUrl: string;
   status: SessionStatus;
+  connectionId: string;
 }
 

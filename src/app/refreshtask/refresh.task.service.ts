@@ -20,6 +20,6 @@ export class RefreshTaskService {
   }
 
   findRefreshTasks(id: string): Observable<RefreshTask[]> {
-    return this.http.get<RefreshTask[]>(AppSettings.BACKEND_HOSTNAME_API + '/refresh-tasks' + id, AppSettings.HTTP_OPTIONS);
+    return this.http.get<RefreshTask[]>(AppSettings.BACKEND_HOSTNAME_API + '/refresh-tasks', AppSettings.HTTP_OPTIONS);
   }
 }

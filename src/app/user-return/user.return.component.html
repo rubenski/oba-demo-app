@@ -4,6 +4,13 @@
 </span>
 <br/>
 <div *ngIf="connection">
-Connected!
+  Connected!
+</div>
+
+<div *ngIf="refreshTask">
+  {{refreshTask.finished ? 'DONE!' : 'IN PROGRESS'}}
+  <div *ngFor="let refreshingConnection of refreshTask.connections">
+    {{refreshingConnection.status}}
+  </div>
 </div>
 
