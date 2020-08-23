@@ -43,18 +43,22 @@ export class UserReturnComponent implements OnInit {
   ngOnInit(): void {
     this.cdpName = this.localStorageKeyValueService.get(this.stateId);
 
-    // First check if the consent session is still open
-    this.consentSessionService.findConsentSession(this.stateId).subscribe(consentSession => {
+    // First check if the consent session is still open. This will prevent the return URL from being sent to OBA for a second time, which
+    // will result in an error.
+    this.consentSessionService.findOAuthConsentSession(this.stateId).subscribe(consentSession => {
 
+      // If the session isn't closed..
       if (!consentSession.status.closed) {
-        // Register the returned user's URL with the consent session
-        this.consentSessionService.updateConsentSessionWithReturnedUser(new UserReturnedUrl(window.location.href), this.stateId)
+        // Register the returned user's URL with the consent session (triggers OBA to fetch an access token from the bank)
+        this.consentSessionService.updateOAuthConsentSessionWithReturnedUser(new UserReturnedUrl(window.location.href), this.stateId)
           .subscribe(updatedConsentSession => {
+            // If OBA succeeds in obtaining a token based on the code in the user return URL..
             if (updatedConsentSession.status.status === 'success_token_obtained') {
               // Create a connection based on this consent session, identified by its stateId
               this.connectionService.createConnection(this.stateId).subscribe(connection => {
                 // Inform the user
                 this.connection = connection;
+                // Initiate data fetching
                 this.refreshData(connection);
               });
             }
@@ -73,6 +77,7 @@ export class UserReturnComponent implements OnInit {
   }
 
   private refreshData(connection: Connection): void {
+    // The IP Address of the user is a required field in data fetching, because many banks require it
     this.ipService.getUserIp().subscribe(ip => {
       this.refreshTaskService.createRefreshTask(new CreateRefreshTaskRequest(connection.userId, [connection.id], ip.ip))
         .subscribe(task => {

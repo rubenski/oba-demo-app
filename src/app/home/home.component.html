@@ -1,10 +1,13 @@
-<h3 class="pl-1 pb-3">Oscar demo</h3>
 <div class="container">
   <div class="row">
-    <div class="col-5 m-0 p-1">
+    <div class="col-12 m-0 p-1">
+      <h3>
+        Connect your bank
+      </h3>
+      <br/>
       <ul class="list-group w-100" *ngIf="providers">
         <li *ngFor="let provider of providers" class="list-group-item provider-list-item"
-            (click)="selectProvider(provider)">
+            (click)="connect(provider)">
           <div class="float-left mr-3">
             <img src="{{logoUrl + provider.logos.logo60}}">
           </div>
@@ -19,18 +22,5 @@
         </li>
       </ul>
     </div>
-    <div class="col-7 m-0 p-1" *ngIf="selectedProvider">
-      <ul class="list-group w-100">
-        <li class="list-group-item provider-list-item" (click)="connect()">
-          Connect your bank account(s)
-        </li>
-        <li class="list-group-item provider-list-item">
-          Make a payment
-        </li>
-      </ul>
-    </div>
   </div>
 </div>
-
-
-

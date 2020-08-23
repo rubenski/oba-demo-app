@@ -10,6 +10,7 @@ import {ConsentSession} from '../consentsession/consent.session';
 import {CookieService} from 'ngx-cookie-service';
 import {throwError} from 'rxjs';
 import {LocalStorageKeyValueService} from '../local.storage.key.value.service';
+import {DemoAppModalService} from '../demo.app.modal.service';
 
 @Component({
   templateUrl: './home.component.html'
@@ -25,7 +26,8 @@ export class HomeComponent implements OnInit {
               private providerService: ProviderService,
               private consentSessionService: ConsentSessionService,
               private cookieService: CookieService,
-              private localStorageKeyValueService: LocalStorageKeyValueService) {
+              private localStorageKeyValueService: LocalStorageKeyValueService,
+              private demoAppModalService: DemoAppModalService) {
   }
 
   private static shouldRedirect(session: ConsentSession): boolean {
@@ -33,11 +35,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.userService.findUser().subscribe(user => {
       this.user = user;
     }, error => {
-      console.log('err ' + JSON.stringify(error));
       if (error.status === 404 && error.url.endsWith('/api/users')) {
         this.userService.createUser().subscribe(user => {
           this.user = user;
@@ -49,25 +49,27 @@ export class HomeComponent implements OnInit {
         this.providers = providers;
       },
       error => {
-        console.log(JSON.stringify(error));
+        throwError(error);
       }
     );
   }
 
-  selectProvider(provider: CountryDataProvider) {
-    this.selectedProvider = provider;
-  }
+  connect(cdp: CountryDataProvider) {
 
-  connect() {
-    this.consentSessionService.createConsentSession(new CreateConsentSessionRequest(this.selectedProvider.systemName))
+
+    this.consentSessionService.createOAuthConsentSession(new CreateConsentSessionRequest(cdp.systemName))
       .subscribe(session => {
         if (HomeComponent.shouldRedirect(session)) {
+          // Set a new country data provider on the modal service. This will trigger AppComponent to open the modal window, informing the
+          // user of the upcoming redirect
+          this.demoAppModalService.nextMessage(cdp);
           // Before we redirect the user, we set the the combination of the state id and the bank name in local storage.
           // This will allow us to show the bank name in UserReturnComponent when the user returns from the bank.
-          this.localStorageKeyValueService.set(session.stateId, this.selectedProvider.displayName);
+          this.localStorageKeyValueService.set(session.stateId, cdp.displayName);
           // Redirect to the bank
-          window.location.href = session.status.pendingRedirect;
+          // window.location.href = session.status.pendingRedirect;
         } else {
+          // When an oauth consent session is created it should always be ready for redirecting.
           throwError('No redirect in OAuth ConsentSession');
         }
       });

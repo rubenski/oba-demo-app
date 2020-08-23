@@ -15,7 +15,8 @@ import {LocalStorageKeyValueService} from './local.storage.key.value.service';
 import {ConnectionService} from './connection/connection.service';
 import {RefreshTaskService} from './refreshtask/refresh.task.service';
 import {IpService} from './ip/ip.service';
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {DemoAppModalService} from './demo.app.modal.service';
 
 @NgModule({
   declarations: [
@@ -28,14 +29,13 @@ import {IpService} from './ip/ip.service';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [UserService, ProviderService, ConsentSessionService, LocalStorageKeyValueService, ConnectionService,
-    RefreshTaskService, IpService],
+    RefreshTaskService, IpService, DemoAppModalService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
 }
-
-
 

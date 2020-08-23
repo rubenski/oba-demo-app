@@ -12,16 +12,16 @@ export class ConsentSessionService {
   constructor(private http: HttpClient) {
   }
 
-  createConsentSession(request: CreateConsentSessionRequest): Observable<ConsentSession> {
+  createOAuthConsentSession(request: CreateConsentSessionRequest): Observable<ConsentSession> {
     return this.http.post<ConsentSession>(AppSettings.BACKEND_HOSTNAME_API + '/oauth-consent-sessions', request, AppSettings.HTTP_OPTIONS);
   }
 
-  updateConsentSessionWithReturnedUser(userReturnedUrl: UserReturnedUrl, stateId: string): Observable<ConsentSession> {
+  updateOAuthConsentSessionWithReturnedUser(userReturnedUrl: UserReturnedUrl, stateId: string): Observable<ConsentSession> {
     return this.http.patch<ConsentSession>(AppSettings.BACKEND_HOSTNAME_API + '/oauth-consent-sessions/' + stateId,
       userReturnedUrl, AppSettings.HTTP_OPTIONS);
   }
 
-  findConsentSession(stateId: string): Observable<ConsentSession> {
+  findOAuthConsentSession(stateId: string): Observable<ConsentSession> {
     return this.http.get<ConsentSession>(AppSettings.BACKEND_HOSTNAME_API + '/oauth-consent-sessions/' + stateId, AppSettings.HTTP_OPTIONS);
   }
 }

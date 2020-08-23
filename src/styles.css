@@ -1,12 +1,12 @@
 .main {
   margin-top: 50px;
   padding: 50px;
-  background-color: rgba(220, 220, 220, 0.35);
+  background-color: rgba(11, 36, 75, 0.4);
   border-radius: 10px;
 }
 
 body {
-  background: url("/assets/img/bg2.jpg");
+  background: url("/assets/img/bg5.jpg");
 }
 
 h5 {
@@ -15,11 +15,20 @@ h5 {
   color: #444444;
 }
 
+h3 {
+  color: white;
+}
+
 .provider-list-item {
   cursor: pointer;
   border-left: 5px solid white;
 }
 
-.provider-list-item:hover {
-  border-left: 5px solid rgba(255,38,213,0.6);
+button.close {
+  padding: 0.2em;
+}
+
+.modal-dialog .btn-success {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }

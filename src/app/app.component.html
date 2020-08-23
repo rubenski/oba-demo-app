@@ -1,11 +1,25 @@
+<ng-template #modal let-modal>
+  <div>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('cross-click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="float-left">
+      <img src="{{logoUrl + countryDataProvider.logos.logo80}}">
+    </div>
+    <div>Do you want to connect your <b>{{countryDataProvider.displayName}}</b> account(s) and share your accounts and
+      transactions with OBA? We will take you to the bank login page when you click 'Yes'.
+    </div>
+  </div>
+  <button type="button" class="btn btn-success" (click)="modal.close('consent-given')">Yes</button>
+</ng-template>
 
 <app-header></app-header>
 <div class="container">
   <div class="row">
-
     <div class="col main">
       <router-outlet></router-outlet>
     </div>
-
   </div>
 </div>
