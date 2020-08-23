@@ -55,8 +55,6 @@ export class HomeComponent implements OnInit {
   }
 
   connect(cdp: CountryDataProvider) {
-
-
     this.consentSessionService.createOAuthConsentSession(new CreateConsentSessionRequest(cdp.systemName))
       .subscribe(session => {
         if (HomeComponent.shouldRedirect(session)) {
