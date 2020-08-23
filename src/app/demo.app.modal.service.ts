@@ -10,7 +10,9 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 export class DemoAppModalService {
 
   private countryDataProvider = new Subject<CountryDataProvider>();
+  private modalClosedEvent = new Subject<string>();
   countryDataProviderObservable = this.countryDataProvider.asObservable();
+  modelClosedEventObservable = this.modalClosedEvent.asObservable();
 
   constructor(private modalService: NgbModal) {
   }
@@ -21,10 +23,9 @@ export class DemoAppModalService {
 
   open(modal: any) {
     this.modalService.open(modal, {centered: true, size: 'lg'}).result.then((result) => {
-      console.log('opened?');
-      console.log('result: ' + JSON.stringify(result));
+      this.modalClosedEvent.next(result);
     }, (reason) => {
-      console.log(reason);
+      this.modalClosedEvent.next(reason);
     });
   }
 }
