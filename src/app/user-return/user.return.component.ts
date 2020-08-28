@@ -106,7 +106,7 @@ export class UserReturnComponent implements OnInit {
   }
 
   private returnToAccountOverview() {
-    this.router.navigate(['/accounts']);
+    this.router.navigate(['/connections']);
   }
 
 }

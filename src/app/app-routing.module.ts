@@ -13,7 +13,7 @@ const routes: Routes = [{
   path: 'user-return',
   component: UserReturnComponent
 }, {
-  path: 'accounts',
+  path: 'connections',
   component: ConnectionComponent
 }];
 
