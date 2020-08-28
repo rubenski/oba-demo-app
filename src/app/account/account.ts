@@ -36,9 +36,9 @@ class AccountData {
 }
 
 class Balances {
-  booked: number;
-  available: number;
-  expected: number;
+  booked: string;
+  available: string;
+  expected: string;
 }
 
 class AccountNumber {
