@@ -1,11 +1,16 @@
 <div *ngIf="connectionViews">
   <div *ngFor="let connectionView of connectionViews">
-    <img src="{{logoUrl + connectionView.connection.countryDataProvider.logos.logo40}}">
-    {{connectionView.connection.countryDataProvider.displayName}}
-    <img *ngIf="connectionView.connection.latestRefresh && !connectionView.connection.latestRefresh.finished" alt="logo" src="../assets/img/blinking-green-light.gif" style="width:25px">
-    <div *ngFor="let account of connectionView.accounts">
-      {{account.accountData.name}} - {{account.accountData.balances.expected}}
+    <div class="bg-white rounded mb-3">
+      <img class="p-3" src="{{logoUrl + connectionView.connection.countryDataProvider.logos.logo40}}">
+      {{connectionView.connection.countryDataProvider.displayName}}
+      <span *ngIf="connectionView.connection.latestRefresh && !connectionView.connection.latestRefresh.finished">
+        <img alt="logo" src="../assets/img/blinking-green-light.gif" style="width:25px"><span style="color:#939393; font-style: italic">fetching data</span>
+      </span>
+      <ul class="list-group w-100">
+        <li *ngFor="let account of connectionView.accounts" class="list-group-item provider-list-item">
+          {{account.accountData.name}} <span class="float-right">{{account.accountData.balances.expected}}</span>
+        </li>
+      </ul>
     </div>
   </div>
 </div>
-

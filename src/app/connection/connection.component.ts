@@ -37,6 +37,7 @@ export class ConnectionComponent implements OnInit {
         .pipe(
           tap(accounts => {
             this.connectionViews.push(new ConnectionView(c, accounts));
+            this.connectionViews.sort((c1, c2) => c1.connection.created > c2.connection.created ? 1 : -1);
             if (c.latestRefresh != null && !c.latestRefresh.finished) {
               this.pollConnection(c, 2000);
             }
@@ -73,10 +74,8 @@ export class ConnectionComponent implements OnInit {
   }
 
   private updateConnectionView(connection: Connection) {
-    console.log('updating connection view');
     this.connectionViews.forEach(cv => {
       if (cv.connection.id === connection.id) {
-        console.log('found connection to update');
         cv.updateConnection(connection);
         this.accountService.findAccountsForConnection(connection.id).subscribe(accounts => {
           cv.accounts = accounts;
