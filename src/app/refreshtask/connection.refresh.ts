@@ -1,8 +1,11 @@
 /**
  * A connection that is currently refreshing. A RefreshingConnection is always part of a RefreshTask.
  */
-export class RefreshingConnection {
+export class ConnectionRefresh {
   id: string;
+  refreshTaskId: string;
   connectionId: string;
-  status: string;
+  created: string;
+  finished: boolean;
+  result: string;
 }

@@ -15,4 +15,12 @@ export class ConnectionService {
     return this.http.post<Connection>(AppSettings.BACKEND_HOSTNAME_API + '/connections',
       new CreateConnectionRequest(stateId), AppSettings.HTTP_OPTIONS);
   }
+
+  findConnection(connectionId: string): Observable<Connection> {
+    return this.http.get<Connection>(AppSettings.BACKEND_HOSTNAME_API + '/connections/' + connectionId, AppSettings.HTTP_OPTIONS);
+  }
+
+  findConnections(): Observable<Connection[]> {
+    return this.http.get<Connection[]>(AppSettings.BACKEND_HOSTNAME_API + '/connections', AppSettings.HTTP_OPTIONS);
+  }
 }

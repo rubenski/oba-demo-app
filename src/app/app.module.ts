@@ -17,13 +17,16 @@ import {RefreshTaskService} from './refreshtask/refresh.task.service';
 import {IpService} from './ip/ip.service';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {DemoAppModalService} from './demo.app.modal.service';
+import {ConnectionComponent} from './connection/connection.component';
+import {AccountService} from './account/account.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     HeaderComponent,
-    UserReturnComponent
+    UserReturnComponent,
+    ConnectionComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,7 @@ import {DemoAppModalService} from './demo.app.modal.service';
     NgbModule
   ],
   providers: [UserService, ProviderService, ConsentSessionService, LocalStorageKeyValueService, ConnectionService,
-    RefreshTaskService, IpService, DemoAppModalService],
+    RefreshTaskService, IpService, DemoAppModalService, AccountService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

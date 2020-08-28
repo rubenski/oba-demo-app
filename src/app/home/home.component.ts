@@ -36,7 +36,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     // Subscribe to the closed event of the modal popup
     this.demoAppModalService.modelClosedEventObservable.subscribe(modalClosedReason => {
       if (modalClosedReason === 'consent-given') {

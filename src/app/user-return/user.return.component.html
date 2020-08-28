@@ -3,14 +3,10 @@
   Please hold on while we connect you to <b>{{cdpName}}</b>.
 </span>
 <br/>
-<div *ngIf="connection">
+<div *ngIf="connected">
   Connected!
 </div>
-
-<div *ngIf="refreshTask">
-  {{refreshTask.finished ? 'DONE!' : 'IN PROGRESS'}}
-  <div *ngFor="let refreshingConnection of refreshTask.connections">
-    {{refreshingConnection.status}}
-  </div>
+<div *ngIf="refreshing">
+  Fetching data...
 </div>
 

@@ -1,0 +1,11 @@
+<div *ngIf="connectionViews">
+  <div *ngFor="let connectionView of connectionViews">
+    <img src="{{logoUrl + connectionView.connection.countryDataProvider.logos.logo40}}">
+    {{connectionView.connection.countryDataProvider.displayName}}
+    <img *ngIf="connectionView.connection.latestRefresh && !connectionView.connection.latestRefresh.finished" alt="logo" src="../assets/img/blinking-green-light.gif" style="width:25px">
+    <div *ngFor="let account of connectionView.accounts">
+      {{account.accountData.name}} - {{account.accountData.balances.expected}}
+    </div>
+  </div>
+</div>
+

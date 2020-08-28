@@ -9,9 +9,6 @@ import {RefreshTaskService} from '../refreshtask/refresh.task.service';
 import {CreateRefreshTaskRequest} from '../refreshtask/create.refresh.task.request';
 import {Connection} from '../connection/connection';
 import {IpService} from '../ip/ip.service';
-import {interval} from 'rxjs';
-import {startWith, switchMap} from 'rxjs/operators';
-import {RefreshTask} from '../refreshtask/refresh.task';
 
 /**
  * Users returning from the bank will land on this component
@@ -23,8 +20,8 @@ export class UserReturnComponent implements OnInit {
 
   private stateId;
   public cdpName: string;
-  public connection: Connection;
-  public refreshTask: RefreshTask;
+  public connected: boolean;
+  public refreshing: boolean;
 
   constructor(private consentSessionService: ConsentSessionService,
               private connectionService: ConnectionService,
@@ -46,7 +43,6 @@ export class UserReturnComponent implements OnInit {
     // First check if the consent session is still open. This will prevent the return URL from being sent to OBA for a second time, which
     // will result in an error.
     this.consentSessionService.findOAuthConsentSession(this.stateId).subscribe(consentSession => {
-
       // If the session isn't closed..
       if (!consentSession.status.closed) {
         // Register the returned user's URL with the consent session (triggers OBA to fetch an access token from the bank)
@@ -55,56 +51,62 @@ export class UserReturnComponent implements OnInit {
             // If OBA succeeds in obtaining a token based on the code in the user return URL..
             if (updatedConsentSession.status.status === 'success_token_obtained') {
               // Create a connection based on this consent session, identified by its stateId
-              this.connectionService.createConnection(this.stateId).subscribe(connection => {
-                // Inform the user
-                this.connection = connection;
-                // Initiate data fetching
-                this.refreshData(connection);
-              });
+              this.createConnectionAndInitiateDataFetching(this.stateId);
             }
           });
       } else if (!consentSession.connectionId) {
-        this.connectionService.createConnection(this.stateId).subscribe(connection => {
-          // Inform the user
-          this.connection = connection;
-          this.refreshData(connection);
-
-        });
+        // This may look a bit strange... It is meant for cases where users refresh the return page when the consent session was closed,
+        // but no connection was created yet. This block will ensure the process of creating a connection and refreshing data for it
+        // continues in this rare case.
+        this.createConnectionAndInitiateDataFetching(this.stateId);
       } else {
-        this.returnHome();
+        // Another rare case.. Users might refresh the page when the connection was already created, but data fetching hasn't started yet.
+        // In this case we fetch the existing connection and start data fetching for it
+        this.connectionService.findConnection(consentSession.connectionId).subscribe(connection => {
+          // Inform the user
+          this.connected = true;
+          this.startDataRefresh(connection);
+        });
       }
     });
   }
 
-  private refreshData(connection: Connection): void {
+  /**
+   * Creates a connection and starts refreshing data by creating a refresh task. We don't wait for results. We don't keep
+   * the response of the refresh task creation. We will get the currently refreshing connections again on the account overview page.
+   * There is no need to keep this state on the client (although it is possible).
+   * @param stateId
+   * @private
+   */
+  private createConnectionAndInitiateDataFetching(stateId: string) {
+    this.connectionService.createConnection(this.stateId).subscribe(connection => {
+      // Inform the user
+      this.connected = true;
+      this.startDataRefresh(connection);
+    });
+  }
+
+  /**
+   * Starts a data refresh by creating a refresh task and returns the user to their account overview
+   * @param connection
+   * @private
+   */
+  private startDataRefresh(connection: Connection): void {
     // The IP Address of the user is a required field in data fetching, because many banks require it
     this.ipService.getUserIp().subscribe(ip => {
+      // Create a refresh task at OBA
       this.refreshTaskService.createRefreshTask(new CreateRefreshTaskRequest(connection.userId, [connection.id], ip.ip))
         .subscribe(task => {
-            console.log(task);
-            // TODO: implement polling here
-            this.pollForTaskStatus(task.id);
+            // Return to accounts overview
+            this.refreshing = true;
+            this.returnToAccountOverview();
           }
         );
     });
   }
 
-  private pollForTaskStatus(refreshTaskId: string) {
-    const subscription = interval(2000)
-      .pipe(
-        startWith(0),
-        switchMap(() => this.refreshTaskService.findRefreshTask(refreshTaskId))
-      )
-      .subscribe(refreshTask => {
-        this.refreshTask = refreshTask;
-        if (refreshTask.finished) {
-          subscription.unsubscribe();
-        }
-      });
-  }
-
-  private returnHome() {
-    this.router.navigate(['/']);
+  private returnToAccountOverview() {
+    this.router.navigate(['/accounts']);
   }
 
 }
