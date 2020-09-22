@@ -4,10 +4,11 @@ import {RefreshTaskService} from '../refreshtask/refresh.task.service';
 import {ConnectionService} from './connection.service';
 import {Connection} from './connection';
 import {ConnectionView} from './connection.view';
-import {AccountService} from '../account/account.service';
+import {AccountsAndTransactionsService} from '../account/accounts.and.transactions.service';
 import {startWith, switchMap, tap} from 'rxjs/operators';
 import {Account} from '../account/account';
 import {AppSettings} from '../app.settings';
+import {AccountHelper} from '../account/account.helper';
 
 @Component({
   templateUrl: './connection.component.html'
@@ -15,11 +16,12 @@ import {AppSettings} from '../app.settings';
 export class ConnectionComponent implements OnInit {
 
   connectionViews: ConnectionView[] = [];
-  logoUrl = AppSettings.BACKEND_HOSTNAME_STATIC_FILES;
+  staticFilesUrl = AppSettings.BACKEND_HOSTNAME_STATIC_FILES;
+  accountHelper = new AccountHelper();
 
   constructor(private refreshTaskService: RefreshTaskService,
               private connectionService: ConnectionService,
-              private accountService: AccountService) {
+              private accountService: AccountsAndTransactionsService) {
   }
 
   ngOnInit(): void {
@@ -83,4 +85,6 @@ export class ConnectionComponent implements OnInit {
       }
     });
   }
+
+
 }

@@ -16,7 +16,7 @@ export class ConsentSessionService {
     return this.http.post<ConsentSession>(AppSettings.BACKEND_HOSTNAME_API + '/oauth-consent-sessions', request, AppSettings.HTTP_OPTIONS);
   }
 
-  updateOAuthConsentSessionWithReturnedUser(userReturnedUrl: UserReturnedUrl, stateId: string): Observable<ConsentSession> {
+  patchOAuthConsentSessionWithReturnedUser(userReturnedUrl: UserReturnedUrl, stateId: string): Observable<ConsentSession> {
     return this.http.patch<ConsentSession>(AppSettings.BACKEND_HOSTNAME_API + '/oauth-consent-sessions/' + stateId,
       userReturnedUrl, AppSettings.HTTP_OPTIONS);
   }

@@ -44,16 +44,22 @@ export class UserReturnComponent implements OnInit {
     // will result in an error.
     this.consentSessionService.findOAuthConsentSession(this.stateId).subscribe(consentSession => {
       // If the session isn't closed..
-      if (!consentSession.status.closed) {
-        // Register the returned user's URL with the consent session (triggers OBA to fetch an access token from the bank)
-        this.consentSessionService.updateOAuthConsentSessionWithReturnedUser(new UserReturnedUrl(window.location.href), this.stateId)
-          .subscribe(updatedConsentSession => {
-            // If OBA succeeds in obtaining a token based on the code in the user return URL..
-            if (updatedConsentSession.status.status === 'success_token_obtained') {
-              // Create a connection based on this consent session, identified by its stateId
-              this.createConnectionAndInitiateDataFetching(this.stateId);
-            }
-          });
+      if (!consentSession.closed) {
+        // Get the user's IP
+        this.ipService.getUserIp().subscribe(ip => {
+          // Register the returned user's URL with the consent session. This triggers OBA to fetch an access token from the bank.
+          this.consentSessionService.patchOAuthConsentSessionWithReturnedUser(new UserReturnedUrl(window.location.href, ip.ip), this.stateId)
+            .subscribe(updatedConsentSession => {
+              // If OBA succeeds in obtaining a token based on the code in the user return URL..
+              if (updatedConsentSession.closed && updatedConsentSession.status === 'success_token_obtained') {
+                // Create a connection based on this consent session, identified by its stateId
+                this.createConnectionAndInitiateDataFetching(this.stateId);
+              } else if (!updatedConsentSession.closed && updatedConsentSession.redirect && updatedConsentSession.redirect.url) {
+                // Redirect again
+                window.location.href = updatedConsentSession.redirect.url;
+              }
+            });
+        });
       } else if (!consentSession.connectionId) {
         // This may look a bit strange... It is meant for cases where users refresh the return page when the consent session was closed,
         // but no connection was created yet. This block will ensure the process of creating a connection and refreshing data for it

@@ -18,7 +18,8 @@ import {IpService} from './ip/ip.service';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {DemoAppModalService} from './demo.app.modal.service';
 import {ConnectionComponent} from './connection/connection.component';
-import {AccountService} from './account/account.service';
+import {AccountsAndTransactionsService} from './account/accounts.and.transactions.service';
+import {AccountComponent} from './account/account.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {AccountService} from './account/account.service';
     HomeComponent,
     HeaderComponent,
     UserReturnComponent,
-    ConnectionComponent
+    ConnectionComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,7 @@ import {AccountService} from './account/account.service';
     NgbModule
   ],
   providers: [UserService, ProviderService, ConsentSessionService, LocalStorageKeyValueService, ConnectionService,
-    RefreshTaskService, IpService, DemoAppModalService, AccountService],
+    RefreshTaskService, IpService, DemoAppModalService, AccountsAndTransactionsService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

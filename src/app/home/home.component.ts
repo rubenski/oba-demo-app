@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
   }
 
   private static shouldRedirect(session: ConsentSession): boolean {
-    return session.status.pendingRedirect && !session.status.closed && session.status.status === 'in_progress_redirect_needed';
+    return session.redirect && !session.closed && session.status === 'in_progress';
   }
 
   ngOnInit(): void {
@@ -63,11 +63,12 @@ export class HomeComponent implements OnInit {
   }
 
   private redirectUser() {
+    console.log('redirect?');
     // Before we redirect the user, we set the the combination of the state id and the bank name in local storage.
     // This will allow us to show the bank name in UserReturnComponent when the user returns from the bank.
     this.localStorageKeyValueService.set(this.session.stateId, this.selectedProvider.displayName);
     // Redirect to the bank
-    window.location.href = this.session.status.pendingRedirect;
+    window.location.href = this.session.redirect.url;
   }
 
   connect(cdp: CountryDataProvider) {

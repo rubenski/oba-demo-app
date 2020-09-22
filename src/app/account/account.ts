@@ -1,48 +1,25 @@
+import {Logos} from '../provider/logos';
+import {AccountData} from './account.data';
+
 export class Account {
   id: string;
   returnedInLastDataRefresh: boolean;
   created: string;
   lastUpdated: string;
   accountData: AccountData;
-
-
+  countryDataProvider: CountryDataProvider;
 }
 
-class AccountData {
-  balances: Balances;
-  accountNumber: AccountNumber;
-  accountType: string;
+class CountryDataProvider {
+  displayName: string;
+  country: string;
+  timeZone: string;
   currency: string;
-  enabled: boolean;
-  name: string;
-
-  public displayName() {
-    if (this.name != null) {
-      return this.name;
-    }
-
-    if (this.accountNumber.iban != null) {
-      return this.accountNumber.iban;
-    }
-
-    if (this.accountNumber.bban != null) {
-      return this.accountNumber.bban;
-    }
-
-    if (this.accountNumber.maskedPan != null) {
-      return this.accountNumber.maskedPan;
-    }
-  }
+  logos: Logos;
 }
 
-class Balances {
-  booked: string;
-  available: string;
-  expected: string;
-}
 
-class AccountNumber {
-  iban: string;
-  bban: string;
-  maskedPan: string;
-}
+
+
+
+

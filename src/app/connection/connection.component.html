@@ -1,15 +1,31 @@
 <div *ngIf="connectionViews">
+  <div class="bg-white rounded mb-3 p-3">
+    &nbsp;
+    <span class="float-right">
+      <img src="/assets/img/icons8-update-left-rotation-25.png">
+    </span>
+  </div>
   <div *ngFor="let connectionView of connectionViews">
     <div class="bg-white rounded mb-3">
-      <img class="p-3" src="{{logoUrl + connectionView.connection.countryDataProvider.logos.logo40}}">
-      <span>{{connectionView.connection.countryDataProvider.displayName}}</span>
-      <span *ngIf="connectionView.connection.latestRefresh && !connectionView.connection.latestRefresh.finished">
-        <img alt="logo" src="../assets/img/blinking-green-light.gif" style="width:25px"><span
-        style="color:#939393; font-style: italic">fetching data</span>
-      </span>
+      <div class="p-3">
+        <img src="{{staticFilesUrl + connectionView.connection.countryDataProvider.logos.logo40}}">
+        <span class="ml-3">{{connectionView.connection.countryDataProvider.displayName}}</span>
+        <span *ngIf="connectionView.connection.latestRefresh && !connectionView.connection.latestRefresh.finished">
+          <img alt="logo" src="../assets/img/blinking-green-light.gif" style="width:25px">
+          <span style="color:#939393; font-style: italic">fetching data</span>
+        </span>
+        <span class="float-right pt-2 pr-1">
+          <img src="/assets/img/icons8-update-left-rotation-25.png">&nbsp;&nbsp;
+          <img src="/assets/img/icons8-slider-25-light.png">
+        </span>
+      </div>
+
       <ul class="list-group w-100">
-        <li *ngFor="let account of connectionView.accounts" class="list-group-item provider-list-item">
-          {{account.accountData.name}} <span class="float-right">{{account.accountData.balances.expected|number:'1.2-2'}}</span>
+        <li *ngFor="let account of connectionView.accounts" class="list-group-item provider-list-item account-item"
+            [routerLink]="['/accounts/' + account.id]" [queryParams]="{page: 1}">
+          {{accountHelper.selectDisplayName(account)}} <span
+          class="float-right">{{account.accountData.currency ? account.accountData.currency : 'EUR'}} {{accountHelper.selectBalance(account)|number:'1.2-2'}}</span>
+          <div style="color:#939393">{{account.accountData.accountNumber.iban}}</div>
         </li>
       </ul>
     </div>

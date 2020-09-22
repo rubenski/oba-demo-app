@@ -1,8 +1,9 @@
 .main {
   margin-top: 50px;
   padding: 1.2em;
-  background-color: rgba(11, 36, 75, 0.4);
+  background-color: rgba(11, 36, 75, 0.8);
   border-radius: 10px;
+  margin-bottom: 50px;
 }
 
 body {
@@ -31,4 +32,8 @@ button.close {
 .modal-dialog .btn-success {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.account-item:hover {
+  background-color: #e8e8e8;
 }

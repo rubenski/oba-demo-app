@@ -1,8 +1,9 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {UserReturnComponent} from './user-return/user.return.component';
 import {ConnectionComponent} from './connection/connection.component';
+import {AccountComponent} from './account/account.component';
 
 
 const routes: Routes = [{
@@ -15,6 +16,9 @@ const routes: Routes = [{
 }, {
   path: 'connections',
   component: ConnectionComponent
+}, {
+  path: 'accounts/:accountId',
+  component: AccountComponent
 }];
 
 
