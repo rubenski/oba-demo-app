@@ -39,9 +39,9 @@ export class ConnectionComponent implements OnInit {
         .pipe(
           tap(accounts => {
             this.connectionViews.push(new ConnectionView(c, accounts));
-            this.connectionViews.sort((c1, c2) => c1.connection.created > c2.connection.created ? 1 : -1);
+            this.connectionViews.sort((c1, c2) => c1.connection.created > c2.connection.created ? -1 : 1);
             if (c.latestRefresh != null && !c.latestRefresh.finished) {
-              this.pollConnection(c, 2000);
+              this.pollConnection(c, 1000);
             }
           }))
       );
@@ -69,6 +69,9 @@ export class ConnectionComponent implements OnInit {
       .subscribe(updatedConnection => {
         if (updatedConnection.latestRefresh && updatedConnection.latestRefresh.finished) {
           // Once the connection refresh is finished, stop polling and update the associated ConnectionView
+          if (updatedConnection.latestRefresh.result === 'failed_technical_error') {
+            
+          }
           subscription.unsubscribe();
           this.updateConnectionView(updatedConnection);
         }

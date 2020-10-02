@@ -1,14 +1,14 @@
-<div *ngIf="account" class="bg-white rounded mb-3">
-  <div class="p-3">
-    <div>
-      <div class="float-left mr-3">
-        <img src="{{staticFilesUrl + account.countryDataProvider.logos.logo40}}">
-      </div>
-      <div>
-        {{account.accountData.name}} <span
-        class="float-right">{{account.accountData.currency ? account.accountData.currency : 'EUR'}} {{accountHelper.selectBalance(account)|number:'1.2-2'}}</span>
-        <div style="color:#939393">{{account.accountData.accountNumber.iban}}</div>
-      </div>
+<div class="container">
+  <div *ngIf="account" class="row bg-white rounded p-3">
+    <div class="col-1">
+      <img src="{{staticFilesUrl + account.countryDataProvider.logos.logo40}}">
+    </div>
+    <div class="col-8">
+      {{account.accountData.name}} <br/>
+      <span style="color:#939393">{{account.accountData.accountNumber.iban}}</span>
+    </div>
+    <div class="col-3 text-right">
+      {{account.accountData.currency ? account.accountData.currency : 'EUR'}} {{accountHelper.selectBalance(account)|number:'1.2-2'}}
     </div>
   </div>
 </div>
@@ -23,3 +23,4 @@
     </li>
   </ul>
 </div>
+

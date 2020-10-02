@@ -37,3 +37,9 @@ button.close {
 .account-item:hover {
   background-color: #e8e8e8;
 }
+
+.connection-header {
+  display: inline-block;
+  width: 175px;
+  margin-left: 15px;
+}
