@@ -12,14 +12,107 @@
     </div>
   </div>
 </div>
+<br/>
+<div *ngIf="transactionPage">
 
-<div *ngIf="transactions">
-  <ul class="list-group w-100">
-    <li *ngFor="let transaction of transactions" class="list-group-item provider-list-item account-item"
-        [routerLink]="['/accounts/' + account.id]" [queryParams]="{page: 1}">
-      {{accountHelper.selectDisplayName(account)}} <span
-      class="float-right">{{account.accountData.currency ? account.accountData.currency : 'EUR'}} {{accountHelper.selectBalance(account)|number:'1.2-2'}}</span>
-      <div style="color:#939393">{{account.accountData.accountNumber.iban}}</div>
+  <ul *ngIf="transactionPage.transactions.length > 0" class="list-group w-100">
+    <li *ngFor="let transaction of transactionPage.transactions; index as i"
+        class="list-group-item provider-list-item account-item"
+        data-toggle="collapse" [attr.data-target]="'#tx'+ i">{{transaction.transactionData.description}} <span
+      class="float-right">{{transaction.transactionData.amount.amount|number:'1.2-2'}}</span>
+      <div class="light">{{transaction.transactionData.other.counterpartyName}}</div>
+      <div id="tx{{i}}" class="collapse">
+        <br/>
+        <table class="transaction-details">
+          <tr>
+            <td>Date</td>
+            <td>{{transaction.transactionData.zonedDate}}</td>
+          </tr>
+          <tr>
+            <td>Description</td>
+            <td>{{transaction.transactionData.description}}</td>
+          </tr>
+          <tr>
+            <td>Status</td>
+            <td>{{transaction.transactionData.status}}</td>
+          </tr>
+          <tr>
+            <td>Counterparty</td>
+            <td>{{transaction.transactionData.other.counterpartyName}}</td>
+          </tr>
+          <tr *ngIf="transaction.transactionData.other.counterpartyAccount != null">
+            <td>Counterparty account</td>
+            <td>{{transaction.transactionData.other.counterpartyAccount.iban}}</td>
+          </tr>
+          <tr *ngIf="transaction.transactionData.other.bankTransactionCode">
+            <td>Bank transaction code</td>
+            <td>{{transaction.transactionData.other.bankTransactionCode}}</td>
+          </tr>
+          <tr *ngIf="transaction.transactionData.other.bookingDate">
+            <td>Booking date</td>
+            <td>{{transaction.transactionData.other.bookingDate}}</td>
+          </tr>
+          <tr *ngIf="transaction.transactionData.other.valueDate">
+            <td>Value date</td>
+            <td>{{transaction.transactionData.other.valueDate}}</td>
+          </tr>
+          <tr *ngIf="transaction.transactionData.other.checkId">
+            <td>Check id</td>
+            <td>{{transaction.transactionData.other.checkId}}</td>
+          </tr>
+          <tr *ngIf="transaction.transactionData.other.endToEndId">
+            <td>End to end Id</td>
+            <td>{{transaction.transactionData.other.endToEndId}}</td>
+          </tr>
+          <tr *ngIf="transaction.transactionData.other.entryReference">
+            <td>Entry reference</td>
+            <td>{{transaction.transactionData.other.entryReference}}</td>
+          </tr>
+          <tr *ngIf="transaction.transactionData.other.exchangeRate">
+            <td>Exchange rate</td>
+            <td>{{transaction.transactionData.other.exchangeRate.rate}}</td>
+          </tr>
+          <tr *ngIf="transaction.transactionData.other.exchangeRate">
+            <td>Currency</td>
+            <td>{{transaction.transactionData.other.exchangeRate.currency}}</td>
+          </tr>
+          <tr *ngIf="transaction.transactionData.other.mandateId">
+            <td>Mandate id</td>
+            <td>{{transaction.transactionData.other.mandateId}}</td>
+          </tr>
+          <tr *ngIf="transaction.transactionData.other.originalAmount">
+            <td>Original amount</td>
+            <td>{{transaction.transactionData.other.originalAmount.currency}} {{transaction.transactionData.other.originalAmount.amount}}</td>
+          </tr>
+          <tr *ngIf="transaction.transactionData.other.proprietaryBankTransactionCode">
+            <td>Proprietary bank transaction code</td>
+            <td>{{transaction.transactionData.other.proprietaryBankTransactionCode}}</td>
+          </tr>
+          <tr *ngIf="transaction.transactionData.other.purposeCode">
+            <td>Purpose code</td>
+            <td>{{transaction.transactionData.other.purposeCode}}</td>
+          </tr>
+          <tr *ngIf="transaction.transactionData.other.reasonCode">
+            <td>Reason code</td>
+            <td>{{transaction.transactionData.other.reasonCode}}</td>
+          </tr>
+          <tr *ngIf="transaction.transactionData.other.remittanceInformationStructured">
+            <td>Payment reference</td>
+            <td>{{transaction.transactionData.other.remittanceInformationStructured}}</td>
+          </tr>
+          <tr *ngIf="transaction.transactionData.other.transactionType">
+            <td>Transaction type</td>
+            <td>{{transaction.transactionData.other.transactionType}}</td>
+          </tr>
+        </table>
+        <br/>
+      </div>
+    </li>
+  </ul>
+
+  <ul *ngIf="transactionPage.transactions.length == 0" class="list-group w-100">
+    <li class="list-group-item provider-list-item account-item text-center light">
+      This account has no transactions
     </li>
   </ul>
 </div>

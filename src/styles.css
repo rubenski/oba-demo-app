@@ -43,3 +43,11 @@ button.close {
   width: 175px;
   margin-left: 15px;
 }
+
+.light {
+  color: #808080;;
+}
+
+.transaction-details tr td {
+  padding: 1px 20px 1px 1px;;
+}

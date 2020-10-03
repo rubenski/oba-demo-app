@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {AccountsAndTransactionsService} from './accounts.and.transactions.service';
 import {AppSettings} from '../app.settings';
 import {ActivatedRoute} from '@angular/router';
-import {Transaction} from './transaction';
 import {Account} from './account';
 import {forkJoin} from 'rxjs';
 import {AccountHelper} from './account.helper';
+import {TransactionPage} from './transaction.page';
 
 @Component({
   templateUrl: './account.component.html'
@@ -16,7 +16,7 @@ export class AccountComponent implements OnInit {
   page: string;
   accountId: string;
   account: Account;
-  transactions: Transaction[];
+  transactionPage: TransactionPage;
   accountHelper = new AccountHelper();
 
   constructor(private accountsAndTransactionsService: AccountsAndTransactionsService, private activatedRoute: ActivatedRoute) {
@@ -35,7 +35,7 @@ export class AccountComponent implements OnInit {
       this.accountsAndTransactionsService.findTransactions(this.accountId, this.page)
     ]).subscribe(result => {
         this.account = result[0];
-        this.transactions = result[1];
+        this.transactionPage = result[1];
       }
     );
   }

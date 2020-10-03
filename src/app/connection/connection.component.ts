@@ -69,9 +69,6 @@ export class ConnectionComponent implements OnInit {
       .subscribe(updatedConnection => {
         if (updatedConnection.latestRefresh && updatedConnection.latestRefresh.finished) {
           // Once the connection refresh is finished, stop polling and update the associated ConnectionView
-          if (updatedConnection.latestRefresh.result === 'failed_technical_error') {
-            
-          }
           subscription.unsubscribe();
           this.updateConnectionView(updatedConnection);
         }

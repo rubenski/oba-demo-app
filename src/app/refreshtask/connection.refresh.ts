@@ -8,4 +8,5 @@ export class ConnectionRefresh {
   created: string;
   finished: boolean;
   result: string;
+  humanReadableTimeSinceLastRefresh: string;
 }

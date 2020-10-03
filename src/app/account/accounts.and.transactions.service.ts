@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 import {AppSettings} from '../app.settings';
 import {HttpClient} from '@angular/common/http';
 import {Account} from './account';
-import {Transaction} from './transaction';
+import {TransactionPage} from './transaction.page';
 
 @Injectable()
 export class AccountsAndTransactionsService {
@@ -20,7 +20,6 @@ export class AccountsAndTransactionsService {
   }
 
   public findTransactions(accountId: string, page: string) {
-    return this.http.get<Transaction[]>(AppSettings.BACKEND_HOSTNAME_API +
-      '/transactions?accountId=' + accountId + '&page=' + page, AppSettings.HTTP_OPTIONS);
+    return this.http.get<TransactionPage>(AppSettings.BACKEND_HOSTNAME_API + '/transactions?accountId=' + accountId + '&page=' + page + '&transactionsPerPage=15', AppSettings.HTTP_OPTIONS);
   }
 }

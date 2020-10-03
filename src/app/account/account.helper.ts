@@ -14,7 +14,6 @@ export class AccountHelper {
   }
 
   public selectBalance(account: Account): string {
-    console.log('poep');
     if (account.accountData.balances.booked != null) {
       return account.accountData.balances.booked;
     }

@@ -11,6 +11,7 @@ export class Connection {
   expectedConsentExpirationTime: string;
   latestRefresh: ConnectionRefresh;
 
+
   public isRefreshing(): boolean {
     return this.latestRefresh !== null && (!this.latestRefresh.finished && !this.latestRefresh.result);
   }
