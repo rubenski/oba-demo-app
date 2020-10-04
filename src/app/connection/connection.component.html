@@ -20,12 +20,15 @@
 
         <span *ngIf="connectionView.connection.latestRefresh.result.startsWith('failed_')">
           <span class="badge badge-danger mr-1">Error</span>
-          <span style="color:#b60000">Data fetching failed</span>
+          <span style="color:#b60000">Data refresh failed</span>
         </span>
-        <span *ngIf="connectionView.connection.latestRefresh.result == 'refresh_success'">
-          <span
-            class="small light">Last refreshed {{connectionView.connection.latestRefresh.humanReadableTimeSinceLastRefresh}}</span>
+        <span *ngIf="connectionView.connection.latestRefresh.result == 'refresh_success'"
+              class="small light"
+              data-toggle="tooltip" data-html="true"
+              title="{{connectionView.connection.latestRefresh.humanReadableRefreshDuration}}">
+            Refreshed {{connectionView.connection.latestRefresh.humanReadableTimeSinceLastRefresh}}
         </span>
+
 
         <span class="float-right pt-2 pr-1">
           <img src="/assets/img/icons8-update-left-rotation-25.png">&nbsp;&nbsp;
