@@ -8,16 +8,20 @@
       <ul class="list-group w-100" *ngIf="providers">
         <li *ngFor="let provider of providers" class="list-group-item provider-list-item"
             (click)="connect(provider)">
-          <div class="float-left mr-3">
-            <img src="{{logoUrl + provider.logos.logo60}}">
-          </div>
-          <div class="w-100 pt-2">
-            <h5>{{provider.displayName}}</h5>
-          </div>
-          <div>
-      <span class="small" *ngFor="let product of provider.products; let last = last">
-        {{product == 'current_account' ? 'current accounts' : ''}}{{product == 'credit_card' ? 'credit cards' : ''}}{{last ? '' : ','}}
-      </span>
+          <div class="row">
+            <div class="col-1 d-flex flex-wrap align-items-center">
+              <img src="{{logoUrl + provider.logos.logo60}}">
+            </div>
+            <div class="col">
+              <div class="w-100 pt-2">
+                <h5>{{provider.displayName}}</h5>
+              </div>
+              <div>
+                  <span class="small" *ngFor="let product of provider.products; let last = last">
+                    {{product == 'current_account' ? 'current accounts' : ''}}{{product == 'credit_card' ? 'credit cards' : ''}}{{last ? '' : ','}}
+                  </span>
+              </div>
+            </div>
           </div>
         </li>
       </ul>
