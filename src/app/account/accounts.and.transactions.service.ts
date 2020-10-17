@@ -20,6 +20,6 @@ export class AccountsAndTransactionsService {
   }
 
   public findTransactions(accountId: string, page: string) {
-    return this.http.get<TransactionPage>(AppSettings.BACKEND_HOSTNAME_API + '/transactions?accountId=' + accountId + '&page=' + page + '&transactionsPerPage=15', AppSettings.HTTP_OPTIONS);
+    return this.http.get<TransactionPage>(AppSettings.BACKEND_HOSTNAME_API + '/transactions?accountId=' + accountId + '&page=' + page + '&transactionsPerPage=500', AppSettings.HTTP_OPTIONS);
   }
 }

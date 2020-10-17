@@ -18,10 +18,11 @@ import {IpService} from '../ip/ip.service';
 })
 export class UserReturnComponent implements OnInit {
 
-  private stateId;
+  public stateId;
   public cdpName: string;
   public connected: boolean;
   public refreshing: boolean;
+  public redirectReason: string;
 
   constructor(private consentSessionService: ConsentSessionService,
               private connectionService: ConnectionService,
@@ -38,6 +39,12 @@ export class UserReturnComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    // If no state id is present in the URL, we have a problem, an we need to stop the flow
+    if (!this.stateId) {
+
+    }
+
     this.cdpName = this.localStorageKeyValueService.get(this.stateId);
 
     // First check if the consent session is still open. This will prevent the return URL from being sent to OBA for a second time, which
@@ -47,7 +54,9 @@ export class UserReturnComponent implements OnInit {
       if (!consentSession.closed) {
         // Get the user's IP
         this.ipService.getUserIp().subscribe(ip => {
-          // Register the returned user's URL with the consent session. This triggers OBA to fetch an access token from the bank.
+          // Register the returned user's URL with the consent session. For banks that implement a single redirect flow,
+          // this triggers OBA to fetch an access token from the bank. For banks that implement multi-redirect, this call
+          // will result in another 'pending redirect' in the oauth consent session.
           this.consentSessionService.patchOAuthConsentSessionWithReturnedUser(new UserReturnedUrl(window.location.href, ip.ip), this.stateId)
             .subscribe(updatedConsentSession => {
               // If OBA succeeds in obtaining a token based on the code in the user return URL..
@@ -55,8 +64,12 @@ export class UserReturnComponent implements OnInit {
                 // Create a connection based on this consent session, identified by its stateId
                 this.createConnectionAndInitiateDataFetching(this.stateId);
               } else if (!updatedConsentSession.closed && updatedConsentSession.redirect && updatedConsentSession.redirect.url) {
-                // Redirect again
-                window.location.href = updatedConsentSession.redirect.url;
+                // We have to redirect again. Inform the user and redirect
+                this.redirectReason = updatedConsentSession.redirect.reason;
+                setTimeout(() => {
+                  window.location.href = updatedConsentSession.redirect.url;
+                }, 4000);
+
               }
             });
         });
@@ -88,6 +101,8 @@ export class UserReturnComponent implements OnInit {
     this.connectionService.createConnection(this.stateId).subscribe(connection => {
       // Inform the user
       this.connected = true;
+      setTimeout(() => {
+      }, 2500);
       this.startDataRefresh(connection);
     });
   }

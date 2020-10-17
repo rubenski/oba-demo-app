@@ -14,35 +14,39 @@
 </div>
 <br/>
 <div *ngIf="transactionPage">
-
   <ul *ngIf="transactionPage.transactions.length > 0" class="list-group w-100">
     <li *ngFor="let transaction of transactionPage.transactions; index as i"
         class="list-group-item provider-list-item account-item"
-        data-toggle="collapse" [attr.data-target]="'#tx'+ i">{{transaction.transactionData.description}} <span
-      class="float-right">{{transaction.transactionData.amount.amount|number:'1.2-2'}}</span>
-      <div class="light">{{transaction.transactionData.other.counterpartyName}}</div>
+        data-toggle="collapse" [attr.data-target]="'#tx'+ i">{{transaction.transactionData.other.counterpartyName}}
+      <span
+        class="float-right">{{transaction.transactionData.amount.amount|number:'1.2-2'}}</span>
+      <div class="light">{{transaction.transactionData.other.description}}</div>
       <div id="tx{{i}}" class="collapse">
         <br/>
         <table class="transaction-details">
           <tr>
             <td>Date</td>
-            <td>{{transaction.transactionData.zonedDate}}</td>
+            <td>{{transaction.transactionData.date}}</td>
           </tr>
           <tr>
             <td>Description</td>
-            <td>{{transaction.transactionData.description}}</td>
+            <td>{{transaction.transactionData.other.description}}</td>
           </tr>
           <tr>
             <td>Status</td>
             <td>{{transaction.transactionData.status}}</td>
           </tr>
-          <tr>
+          <tr *ngIf="transaction.transactionData.other.counterpartyName">
             <td>Counterparty</td>
             <td>{{transaction.transactionData.other.counterpartyName}}</td>
           </tr>
           <tr *ngIf="transaction.transactionData.other.counterpartyAccount != null">
             <td>Counterparty account</td>
             <td>{{transaction.transactionData.other.counterpartyAccount.iban}}</td>
+          </tr>
+          <tr *ngIf="transaction.transactionData.other.creditorId != null">
+            <td>Creditor id</td>
+            <td>{{transaction.transactionData.other.creditorId}}</td>
           </tr>
           <tr *ngIf="transaction.transactionData.other.bankTransactionCode">
             <td>Bank transaction code</td>

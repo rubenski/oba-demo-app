@@ -14,8 +14,7 @@
           {{connectionView.connection.countryDataProvider.displayName}}
         </span>
         <span *ngIf="connectionView.connection.latestRefresh && !connectionView.connection.latestRefresh.finished">
-          <img alt="logo" src="../assets/img/blinking-green-light.gif" style="width:25px">
-          <span style="color:#939393; font-style: italic">fetching data</span>
+          Fetching data <img alt="logo" src="../assets/img/blinking-green-light.gif" style="width:25px">
         </span>
 
         <span *ngIf="connectionView.connection.latestRefresh.result.startsWith('failed_')">

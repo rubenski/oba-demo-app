@@ -1,5 +1,4 @@
 export class Transaction {
-
   id: string;
   accountId: string;
   created: string;
@@ -9,8 +8,6 @@ export class Transaction {
 
 class TransactionData {
   amount: Amount;
-  description: string;
-  zonedDate: string;
   date: string;
   status: string;
   other: Other;
@@ -24,9 +21,12 @@ class Amount {
 class Other {
   counterpartyName: string;
   counterpartyAccount: AccountReference;
+  creditorId: string;
+  description: string;
   endToEndId: string;
   bookingDate: string;
   valueDate: string;
+  untypedDate: string;
   bankTransactionCode: string;
   checkId: string;
   entryReference: string;

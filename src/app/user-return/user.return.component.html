@@ -1,12 +1,19 @@
 <h3 class="pl-1 pb-3">Welcome back</h3>
-<span *ngIf="cdpName">
-  Please hold on while we connect you to <b>{{cdpName}}</b>.
-</span>
-<br/>
-<div *ngIf="connected">
-  Connected!
-</div>
-<div *ngIf="refreshing">
-  Fetching data...
-</div>
 
+<div class="container">
+  <div *ngIf="cdpName" class="row bg-white rounded p-3">
+    <div class="col-12" *ngIf="!connected && stateId">
+      Connecting you to <b>{{cdpName}}</b> <img alt="logo" src="../assets/img/blinking-green-light.gif" style="width:25px">
+    </div>
+    <div *ngIf="connected" class="col-12">
+      Connected!
+    </div>
+    <div *ngIf="redirectReason" class="col-12">
+      <br/>
+      The bank wants you to
+      <span *ngIf="redirectReason === 'authenticate_with_mfa'">perform another consent step (Multi Factor Authentication). Redirecting you again..</span>
+      <span *ngIf="redirectReason === 'authenticate_type_accounts'">perform another authentications step (Accounts). Redirecting you again..</span>
+      <span *ngIf="redirectReason === 'authenticate_type_transactions'">perform another authentications step (Transactions). Redirecting you again..</span>
+    </div>
+  </div>
+</div>
