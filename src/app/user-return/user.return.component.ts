@@ -23,6 +23,7 @@ export class UserReturnComponent implements OnInit {
   public connected: boolean;
   public refreshing: boolean;
   public redirectReason: string;
+  public errorMessage: string;
 
   constructor(private consentSessionService: ConsentSessionService,
               private connectionService: ConnectionService,
@@ -60,9 +61,15 @@ export class UserReturnComponent implements OnInit {
           this.consentSessionService.patchOAuthConsentSessionWithReturnedUser(new UserReturnedUrl(window.location.href, ip.ip), this.stateId)
             .subscribe(updatedConsentSession => {
               // If OBA succeeds in obtaining a token based on the code in the user return URL..
-              if (updatedConsentSession.closed && updatedConsentSession.status === 'success_token_obtained') {
-                // Create a connection based on this consent session, identified by its stateId
-                this.createConnectionAndInitiateDataFetching(this.stateId);
+              if (updatedConsentSession.closed) {
+                if (updatedConsentSession.status === 'success_token_obtained') {
+                  // Create a connection based on this consent session, identified by its stateId
+                  this.createConnectionAndInitiateDataFetching(this.stateId);
+                } else if (updatedConsentSession.status === 'error_not_authenticated_or_no_consent_provided_at_bank') {
+                  this.errorMessage = 'No consent was provided at the bank. Please <a href="#" [routerLink]="/">try again</a>';
+                } else if (updatedConsentSession.status === 'error_could_not_obtain_access_token') {
+                  this.errorMessage = 'OBA was unable to connect you to your bank. Please <a href="#" [routerLink]="/">try again</a> later';
+                }
               } else if (!updatedConsentSession.closed && updatedConsentSession.redirect && updatedConsentSession.redirect.url) {
                 // We have to redirect again. Inform the user and redirect
                 this.redirectReason = updatedConsentSession.redirect.reason;
