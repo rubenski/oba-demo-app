@@ -5,6 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Account} from './account';
 import {forkJoin} from 'rxjs';
 import {AccountHelper} from './account.helper';
+import {TransactionHelper} from './transaction.helper';
 import {TransactionPage} from './transaction.page';
 
 @Component({
@@ -18,6 +19,7 @@ export class AccountComponent implements OnInit {
   account: Account;
   transactionPage: TransactionPage;
   accountHelper = new AccountHelper();
+  transactionHelper = new TransactionHelper();
 
   constructor(private accountsAndTransactionsService: AccountsAndTransactionsService, private activatedRoute: ActivatedRoute) {
     activatedRoute.params.subscribe(val => {

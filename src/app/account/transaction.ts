@@ -1,9 +1,15 @@
+export class DemoTransaction {
+  transaction: Transaction;
+  displayDate: string;
+}
+
 export class Transaction {
   id: string;
   accountId: string;
   created: string;
   updated: string;
   transactionData: TransactionData;
+  bankId: string;
 }
 
 class TransactionData {
@@ -11,6 +17,8 @@ class TransactionData {
   date: string;
   status: string;
   other: Other;
+
+
 }
 
 class Amount {

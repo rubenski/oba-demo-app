@@ -4,6 +4,7 @@ import {AppSettings} from '../app.settings';
 import {HttpClient} from '@angular/common/http';
 import {Account} from './account';
 import {TransactionPage} from './transaction.page';
+import {DemoTransaction} from "./transaction";
 
 @Injectable()
 export class AccountsAndTransactionsService {

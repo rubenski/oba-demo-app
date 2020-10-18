@@ -2,14 +2,13 @@ import {Account} from './account';
 
 export class AccountHelper {
 
-
   public selectDisplayName(account: Account): string {
-    if (account.accountData.name != null) {
-      return account.accountData.name;
+    if (account.accountData.other.product != null) {
+      return account.accountData.other.product;
     }
 
-    if (account.accountData.accountNumber.iban) {
-      return account.accountData.accountNumber.iban;
+    if (account.accountData.other.ownerName != null) {
+      return account.accountData.other.ownerName;
     }
   }
 
